@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import Button from './Button';
 
-function ProductForm({ onSubmit, onCancel, initialData = null, isLoading = false }) {
+function RawMaterialForm({ onSubmit, onCancel, initialData = null, isLoading = false }) {
   const {
     register,
     handleSubmit,
@@ -10,7 +10,7 @@ function ProductForm({ onSubmit, onCancel, initialData = null, isLoading = false
     defaultValues: initialData || {
       code: '',
       name: '',
-      value: ''
+      stockQuantity: ''
     }
   });
 
@@ -27,7 +27,7 @@ function ProductForm({ onSubmit, onCancel, initialData = null, isLoading = false
             minLength: { value: 2, message: 'Mínimo 2 caracteres' }
           })}
           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Ex: PROD-001"
+          placeholder="Ex: MAT-001"
         />
         {errors.code && (
           <p className="text-red-500 text-xs mt-1">{errors.code.message}</p>
@@ -45,7 +45,7 @@ function ProductForm({ onSubmit, onCancel, initialData = null, isLoading = false
             minLength: { value: 3, message: 'Mínimo 3 caracteres' }
           })}
           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Ex: Cadeira Executiva"
+          placeholder="Ex: Madeira de Pinus"
         />
         {errors.name && (
           <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
@@ -54,21 +54,21 @@ function ProductForm({ onSubmit, onCancel, initialData = null, isLoading = false
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          Valor (R$)
+          Quantidade em Estoque
         </label>
         <input
           type="number"
           step="0.01"
-          {...register('value', {
-            required: 'Valor é obrigatório',
-            min: { value: 0.01, message: 'Valor deve ser maior que zero' },
+          {...register('stockQuantity', {
+            required: 'Quantidade é obrigatória',
+            min: { value: 0, message: 'Quantidade não pode ser negativa' },
             valueAsNumber: true
           })}
           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Ex: 350.00"
+          placeholder="Ex: 150.50"
         />
-        {errors.value && (
-          <p className="text-red-500 text-xs mt-1">{errors.value.message}</p>
+        {errors.stockQuantity && (
+          <p className="text-red-500 text-xs mt-1">{errors.stockQuantity.message}</p>
         )}
       </div>
 
@@ -84,4 +84,4 @@ function ProductForm({ onSubmit, onCancel, initialData = null, isLoading = false
   );
 }
 
-export default ProductForm;
+export default RawMaterialForm;
