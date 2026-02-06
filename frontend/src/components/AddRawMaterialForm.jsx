@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 import Button from './Button';
 
 function AddRawMaterialForm({
@@ -11,13 +12,25 @@ function AddRawMaterialForm({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
-    defaultValues: initialData || {
+    defaultValues: {
       rawMaterialId: '',
       requiredQuantity: ''
     }
   });
+
+  useEffect(() => {
+    if (initialData) {
+      reset(initialData);
+    } else {
+      reset({
+        rawMaterialId: '',
+        requiredQuantity: ''
+      });
+    }
+  }, [initialData, reset]);
 
   const isEditMode = !!initialData;
 

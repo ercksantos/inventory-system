@@ -101,7 +101,10 @@ function ProductComposition() {
         await productRawMaterialService.updateQuantity(
           selectedProductId,
           editingRawMaterial.rawMaterialId,
-          { requiredQuantity: data.requiredQuantity }
+          {
+            rawMaterialId: editingRawMaterial.rawMaterialId,
+            requiredQuantity: data.requiredQuantity
+          }
         );
         toast.success('Quantidade atualizada com sucesso!');
       } else {

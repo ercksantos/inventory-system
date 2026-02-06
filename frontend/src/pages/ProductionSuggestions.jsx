@@ -18,8 +18,8 @@ function ProductionSuggestions() {
       const data = await productionService.getSuggestions();
       // Ordenar por valor total (maior primeiro)
       const sorted = data.sort((a, b) => {
-        const totalA = a.maxQuantity * a.productValue;
-        const totalB = b.maxQuantity * b.productValue;
+        const totalA = a.maxQuantityProducible * a.productValue;
+        const totalB = b.maxQuantityProducible * b.productValue;
         return totalB - totalA;
       });
       setSuggestions(sorted);
@@ -35,7 +35,7 @@ function ProductionSuggestions() {
 
   const getTotalProductionValue = () => {
     return suggestions.reduce((total, suggestion) => {
-      return total + (suggestion.maxQuantity * suggestion.productValue);
+      return total + (suggestion.maxQuantityProducible * suggestion.productValue);
     }, 0);
   };
 
@@ -95,7 +95,7 @@ function ProductionSuggestions() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {suggestions.map((suggestion) => {
-              const totalValue = suggestion.maxQuantity * suggestion.productValue;
+              const totalValue = suggestion.maxQuantityProducible * suggestion.productValue;
               return (
                 <Card key={suggestion.productId} className="hover:scale-105 transition-transform">
                   <div className="flex justify-between items-start mb-4">
@@ -119,7 +119,7 @@ function ProductionSuggestions() {
                     <div className="flex justify-between items-center py-2 border-b border-gray-100">
                       <span className="text-sm text-gray-600">Quantidade Máxima</span>
                       <span className="font-medium text-gray-800">
-                        {formatNumberBR(suggestion.maxQuantity)} unidades
+                        {formatNumberBR(suggestion.maxQuantityProducible)} unidades
                       </span>
                     </div>
 
