@@ -81,11 +81,11 @@ function AddRawMaterialForm({
         )}
       </div>
 
-      <div className="flex gap-2 justify-end pt-4">
-        <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading}>
+      <div className="flex flex-col sm:flex-row gap-2 justify-end pt-4">
+        <Button type="button" variant="secondary" onClick={onCancel} disabled={isLoading} fullWidth className="sm:w-auto">
           Cancelar
         </Button>
-        <Button type="submit" variant="primary" disabled={isLoading}>
+        <Button type="submit" variant="primary" disabled={isLoading} fullWidth className="sm:w-auto">
           {isLoading ? 'Salvando...' : 'Salvar'}
         </Button>
       </div>

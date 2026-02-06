@@ -178,7 +178,7 @@ function ProductComposition() {
     <div>
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Composição de Produtos</h1>
 
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
+      <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Selecione um Produto
         </label>
@@ -198,7 +198,7 @@ function ProductComposition() {
 
       {selectedProductId && (
         <>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
               <h2 className="text-xl font-semibold text-gray-800">
                 {selectedProduct?.name}
@@ -228,7 +228,7 @@ function ProductComposition() {
       )}
 
       {!selectedProductId && (
-        <div className="bg-gray-50 rounded-lg p-12 text-center">
+        <div className="bg-gray-50 rounded-lg p-8 sm:p-12 text-center">
           <p className="text-gray-500">Selecione um produto para visualizar e gerenciar sua composição</p>
         </div>
       )}

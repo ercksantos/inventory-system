@@ -136,8 +136,13 @@ function RawMaterials() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Matérias-Primas</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Matérias-Primas</h1>
+          <p className="text-sm text-gray-600 mt-1">
+            {rawMaterials.length} {rawMaterials.length === 1 ? 'matéria-prima cadastrada' : 'matérias-primas cadastradas'}
+          </p>
+        </div>
         <Button onClick={() => handleOpenModal()}>
           + Nova Matéria-Prima
         </Button>

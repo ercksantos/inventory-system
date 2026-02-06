@@ -12,13 +12,13 @@ INSERT INTO products (id, code, name, value) VALUES
 
 -- Inserir Matérias-Primas
 INSERT INTO raw_materials (id, code, name, stock_quantity) VALUES
-(1, 'MAT001', 'Madeira de Pinus (m³)', 50.00),
-(2, 'MAT002', 'Tecido para Estofamento (m²)', 120.00),
-(3, 'MAT003', 'Parafusos (unidades)', 5000.00),
-(4, 'MAT004', 'Cola para Madeira (litros)', 30.00),
-(5, 'MAT005', 'Verniz (litros)', 25.00),
-(6, 'MAT006', 'Dobradiças (unidades)', 200.00),
-(7, 'MAT007', 'Espuma para Estofamento (m³)', 15.00);
+(1, 'MAT001', 'Madeira de Pinus (m³)', 40.00),
+(2, 'MAT002', 'Tecido para Estofamento (m²)', 80.00),
+(3, 'MAT003', 'Parafusos (unidades)', 250.00),
+(4, 'MAT004', 'Cola para Madeira (litros)', 5.00),
+(5, 'MAT005', 'Verniz (litros)', 12.00),
+(6, 'MAT006', 'Dobradiças (unidades)', 25.00),
+(7, 'MAT007', 'Espuma para Estofamento (m³)', 10.00);
 
 -- Associar Matérias-Primas aos Produtos
 

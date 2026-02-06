@@ -110,8 +110,13 @@ function Products() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Produtos</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Produtos</h1>
+          <p className="text-sm text-gray-600 mt-1">
+            {products.length} {products.length === 1 ? 'produto cadastrado' : 'produtos cadastrados'}
+          </p>
+        </div>
         <Button onClick={() => handleOpenModal()}>
           + Novo Produto
         </Button>

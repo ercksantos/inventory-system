@@ -64,7 +64,7 @@ function ProductionSuggestions() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Sugestões de Produção</h1>
           <p className="text-gray-600 text-sm mt-1">
@@ -81,12 +81,12 @@ function ProductionSuggestions() {
       {!loading && hasCalculated && suggestions.length > 0 && (
         <>
           <div className="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg shadow-lg p-6 mb-6">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex-1">
                 <p className="text-sm opacity-90">Valor Total de Produção Possível</p>
                 <p className="text-3xl font-bold mt-1">{formatCurrency(getTotalProductionValue())}</p>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right">
                 <p className="text-sm opacity-90">Produtos Disponíveis</p>
                 <p className="text-3xl font-bold mt-1">{suggestions.length}</p>
               </div>
@@ -138,7 +138,7 @@ function ProductionSuggestions() {
       )}
 
       {!loading && hasCalculated && suggestions.length === 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-12 text-center">
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8 sm:p-12 text-center">
           <div className="text-6xl mb-4">⚠️</div>
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
             Nenhum Produto Pode Ser Produzido
@@ -153,7 +153,7 @@ function ProductionSuggestions() {
       )}
 
       {!loading && !hasCalculated && (
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-12 text-center">
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-8 sm:p-12 text-center">
           <div className="text-6xl mb-4">📊</div>
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
             Pronto para Calcular Sugestões
