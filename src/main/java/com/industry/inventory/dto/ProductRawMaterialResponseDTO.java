@@ -19,4 +19,5 @@ public class ProductRawMaterialResponseDTO {
     private String rawMaterialCode;
     private String rawMaterialName;
     private BigDecimal requiredQuantity;
+    private BigDecimal stockQuantity;
 }

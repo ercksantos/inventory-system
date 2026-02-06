@@ -58,3 +58,8 @@ INSERT INTO product_raw_materials (id, product_id, raw_material_id, required_qua
 (20, 5, 3, 50.00), -- 50 parafusos
 (21, 5, 7, 0.80);  -- 0.80 m³ de espuma
 
+-- Resetar sequências para evitar conflitos de IDs ao inserir novos registros
+SELECT setval('products_id_seq', (SELECT MAX(id) FROM products));
+SELECT setval('raw_materials_id_seq', (SELECT MAX(id) FROM raw_materials));
+SELECT setval('product_raw_materials_id_seq', (SELECT MAX(id) FROM product_raw_materials));
+

@@ -83,7 +83,8 @@ public class DTOMapper {
                 prm.getRawMaterial().getId(),
                 prm.getRawMaterial().getCode(),
                 prm.getRawMaterial().getName(),
-                prm.getRequiredQuantity()
+                prm.getRequiredQuantity(),
+                prm.getRawMaterial().getStockQuantity()
         );
     }
 }

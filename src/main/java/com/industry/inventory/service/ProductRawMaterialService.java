@@ -137,7 +137,8 @@ public class ProductRawMaterialService {
                 productRawMaterial.getRawMaterial().getId(),
                 productRawMaterial.getRawMaterial().getCode(),
                 productRawMaterial.getRawMaterial().getName(),
-                productRawMaterial.getRequiredQuantity()
+                productRawMaterial.getRequiredQuantity(),
+                productRawMaterial.getRawMaterial().getStockQuantity()
         );
     }
 }

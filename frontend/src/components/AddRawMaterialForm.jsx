@@ -15,7 +15,7 @@ function AddRawMaterialForm({
   } = useForm({
     defaultValues: initialData || {
       rawMaterialId: '',
-      quantityRequired: ''
+      requiredQuantity: ''
     }
   });
 
@@ -55,7 +55,7 @@ function AddRawMaterialForm({
         <input
           type="number"
           step="0.01"
-          {...register('quantityRequired', {
+          {...register('requiredQuantity', {
             required: 'Quantidade é obrigatória',
             min: { value: 0.01, message: 'Quantidade deve ser maior que zero' },
             valueAsNumber: true
@@ -63,8 +63,8 @@ function AddRawMaterialForm({
           className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Ex: 25.50"
         />
-        {errors.quantityRequired && (
-          <p className="text-red-500 text-xs mt-1">{errors.quantityRequired.message}</p>
+        {errors.requiredQuantity && (
+          <p className="text-red-500 text-xs mt-1">{errors.requiredQuantity.message}</p>
         )}
       </div>
 

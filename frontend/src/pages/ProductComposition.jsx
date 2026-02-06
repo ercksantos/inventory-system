@@ -77,8 +77,8 @@ function ProductComposition() {
   const handleOpenEditModal = (rawMaterial) => {
     setIsEditMode(true);
     setEditingRawMaterial({
-      rawMaterialId: rawMaterial.id,
-      quantityRequired: rawMaterial.quantityRequired
+      rawMaterialId: rawMaterial.rawMaterialId,
+      requiredQuantity: rawMaterial.requiredQuantity
     });
     setIsModalOpen(true);
   };
@@ -90,7 +90,7 @@ function ProductComposition() {
   };
 
   const getAvailableRawMaterials = () => {
-    const usedIds = productRawMaterials.map(prm => prm.id);
+    const usedIds = productRawMaterials.map(prm => prm.rawMaterialId);
     return allRawMaterials.filter(rm => !usedIds.includes(rm.id));
   };
 
@@ -101,7 +101,7 @@ function ProductComposition() {
         await productRawMaterialService.updateQuantity(
           selectedProductId,
           editingRawMaterial.rawMaterialId,
-          { quantityRequired: data.quantityRequired }
+          { requiredQuantity: data.requiredQuantity }
         );
         toast.success('Quantidade atualizada com sucesso!');
       } else {
@@ -134,15 +134,15 @@ function ProductComposition() {
   const columns = [
     {
       header: 'Código',
-      accessor: 'code'
+      accessor: 'rawMaterialCode'
     },
     {
       header: 'Nome',
-      accessor: 'name'
+      accessor: 'rawMaterialName'
     },
     {
       header: 'Quantidade Necessária',
-      render: (row) => <span className="font-medium">{formatNumberBR(row.quantityRequired)}</span>
+      render: (row) => <span className="font-medium">{formatNumberBR(row.requiredQuantity)}</span>
     },
     {
       header: 'Estoque Disponível',
@@ -159,7 +159,7 @@ function ProductComposition() {
             Editar Qtd
           </button>
           <button
-            onClick={() => handleRemove(row.id, row.name)}
+            onClick={() => handleRemove(row.rawMaterialId, row.rawMaterialName)}
             className="text-red-600 hover:text-red-800 font-medium"
           >
             Remover
