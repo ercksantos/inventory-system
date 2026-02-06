@@ -476,7 +476,22 @@ Sistema desenvolvido seguindo as melhores práticas do Spring Boot e padrões de
 
 ---
 
-## 📄 Licença
+## ⚖️ Direitos Autorais e Licença
 
-Este projeto é de código aberto e está disponível para uso educacional e comercial.
+**IMPORTANTE**: Este código foi desenvolvido exclusivamente para avaliação técnica no processo seletivo da Projedata Informática.
+Proteção Legal
+
+✅ A empresa pode avaliar e executar este código para fins de processo seletivo<br>
+❌ É PROIBIDO o uso comercial, modificação ou incorporação em produtos da empresa sem contratação formal do autor<br>
+❌ É PROIBIDA a utilização em projetos internos/externos sem autorização expressa por escrito
+
+**Uso Comercial**
+Qualquer uso deste código além da avaliação técnica requer:
+
+1. Contratação formal do autor (CLT ou PJ)
+2. Acordo de cessão de direitos autorais
+3. Compensação financeira adequada
+
+**Licença**: Todos os direitos reservados ao autor. Consulte [LICENSE](https://github.com/ercksantos/inventory-system/blob/main/LICENSE) para detalhes.<br>
+**Base Legal**: Lei nº 9.610/98 (Lei de Direitos Autorais)
 
