@@ -21,7 +21,7 @@ public class RawMaterialService {
 
     @Transactional
     public RawMaterialResponseDTO create(RawMaterialRequestDTO requestDTO) {
-        // Validate if code already exists
+        // Valida se o código já existe
         if (rawMaterialRepository.existsByCode(requestDTO.getCode())) {
             throw new BusinessException("Raw material with code '" + requestDTO.getCode() + "' already exists");
         }
@@ -62,7 +62,7 @@ public class RawMaterialService {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Raw material not found with id: " + id));
 
-        // Validate if new code already exists for another raw material
+        // Valida se o novo código já existe para outra matéria-prima
         if (!rawMaterial.getCode().equals(requestDTO.getCode()) &&
             rawMaterialRepository.existsByCode(requestDTO.getCode())) {
             throw new BusinessException("Raw material with code '" + requestDTO.getCode() + "' already exists");
@@ -85,7 +85,7 @@ public class RawMaterialService {
         rawMaterialRepository.deleteById(id);
     }
 
-    // Helper method to convert Entity to DTO
+    // Método auxiliar para converter Entidade em DTO
     private RawMaterialResponseDTO toResponseDTO(RawMaterial rawMaterial) {
         return new RawMaterialResponseDTO(
                 rawMaterial.getId(),

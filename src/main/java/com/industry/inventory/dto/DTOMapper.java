@@ -6,7 +6,7 @@ import com.industry.inventory.model.RawMaterial;
 
 public class DTOMapper {
 
-    // Product mappers
+    // Mapeadores de Product
     public static ProductResponseDTO toProductResponseDTO(Product product) {
         if (product == null) {
             return null;
@@ -38,7 +38,7 @@ public class DTOMapper {
         }
     }
 
-    // RawMaterial mappers
+    // Mapeadores de RawMaterial
     public static RawMaterialResponseDTO toRawMaterialResponseDTO(RawMaterial rawMaterial) {
         if (rawMaterial == null) {
             return null;
@@ -70,7 +70,7 @@ public class DTOMapper {
         }
     }
 
-    // ProductRawMaterial mappers
+    // Mapeadores de ProductRawMaterial
     public static ProductRawMaterialResponseDTO toProductRawMaterialResponseDTO(ProductRawMaterial prm) {
         if (prm == null) {
             return null;

@@ -21,7 +21,7 @@ public class ProductService {
 
     @Transactional
     public ProductResponseDTO create(ProductRequestDTO requestDTO) {
-        // Validate if code already exists
+        // Valida se o código já existe
         if (productRepository.existsByCode(requestDTO.getCode())) {
             throw new BusinessException("Product with code '" + requestDTO.getCode() + "' already exists");
         }
@@ -62,7 +62,7 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
 
-        // Validate if new code already exists for another product
+        // Valida se o novo código já existe para outro produto
         if (!product.getCode().equals(requestDTO.getCode()) &&
             productRepository.existsByCode(requestDTO.getCode())) {
             throw new BusinessException("Product with code '" + requestDTO.getCode() + "' already exists");
@@ -85,7 +85,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    // Helper method to convert Entity to DTO
+    // Método auxiliar para converter Entidade em DTO
     private ProductResponseDTO toResponseDTO(Product product) {
         return new ProductResponseDTO(
                 product.getId(),
