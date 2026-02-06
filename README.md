@@ -1,292 +1,177 @@
 # Sistema de Controle de Estoque Industrial
 
-Sistema completo de gerenciamento de estoque para indústrias, controlando produtos, matérias-primas e sugestões inteligentes de produção.
+Sistema completo de gerenciamento de estoque para indústrias com **sugestões inteligentes de produção** baseadas em análise de disponibilidade de matérias-primas.
 
-Desenvolvido com **Spring Boot 4.0.2** e **Java 21**.
-
----
-
-## 🚀 Tecnologias
-
-- **Java 21**
-- **Spring Boot 4.0.2**
-- **Spring Data JPA**
-- **PostgreSQL 16**
-- **Hibernate**
-- **Lombok**
-- **Jakarta Validation**
-- **Docker & Docker Compose**
+**Stack:** Spring Boot 4.0.2 + Java 21 + React 18 + PostgreSQL 16
 
 ---
 
-## 📋 Pré-requisitos
+## 🎯 Funcionalidades
 
-- Java 21 ou superior
+- ✅ **CRUD Completo** de Produtos e Matérias-Primas
+- ✅ **Gestão de Composições** (receitas de produtos)
+- ✅ **Sugestões Inteligentes de Produção**
+  - Analisa estoque disponível
+  - Calcula quantidade máxima produzível
+  - Prioriza produtos de maior valor
+  - Calcula valor total de produção
+- ✅ **Dashboard Interativo** com estatísticas em tempo real
+- ✅ **Interface Responsiva** para desktop e mobile
+
+---
+
+## 🚀 Executando o Projeto
+
+### Pré-requisitos
+
+- Java 21+
+- Node.js 18+
+- Docker & Docker Compose
 - Maven 3.8+
-- Docker e Docker Compose
 
----
+### 1. Iniciar o Banco de Dados
 
-## 🐳 Configuração do Banco de Dados
-
-O projeto utiliza PostgreSQL rodando em container Docker.
-
-### Iniciar o banco de dados:
 ```bash
 docker-compose up -d
 ```
 
-### Parar o banco de dados:
+### 2. Iniciar o Backend
+
 ```bash
-docker-compose down
+./mvnw spring-boot:run
 ```
 
-### Parar e remover volumes (apaga todos os dados):
+O backend estará disponível em: **http://localhost:8080**
+
+### 3. Iniciar o Frontend
+
 ```bash
-docker-compose down -v
+cd frontend
+npm install
+npm run dev
 ```
 
-### Configurações do Banco:
+O frontend estará disponível em: **http://localhost:3000**
+
+---
+
+## 📊 Tecnologias Utilizadas
+
+### Backend
+- Spring Boot 4.0.2
+- Spring Data JPA
+- PostgreSQL 16
+- Hibernate
+- Jakarta Validation
+- Lombok
+
+### Frontend
+- React 18
+- React Router DOM
+- React Hook Form
+- Axios
+- TailwindCSS 3
+- Vite 7
+- React Toastify
+
+---
+
+## 🔌 API Endpoints
+
+### Produtos
+- `GET /api/products` - Listar todos
+- `GET /api/products/{id}` - Buscar por ID
+- `GET /api/products/code/{code}` - Buscar por código
+- `POST /api/products` - Criar novo
+- `PUT /api/products/{id}` - Atualizar
+- `DELETE /api/products/{id}` - Deletar
+
+### Matérias-Primas
+- `GET /api/raw-materials` - Listar todas
+- `GET /api/raw-materials/{id}` - Buscar por ID
+- `GET /api/raw-materials/code/{code}` - Buscar por código
+- `POST /api/raw-materials` - Criar nova
+- `PUT /api/raw-materials/{id}` - Atualizar
+- `DELETE /api/raw-materials/{id}` - Deletar
+
+### Composições
+- `GET /api/products/{productId}/raw-materials` - Listar matérias-primas de um produto
+- `POST /api/products/{productId}/raw-materials` - Adicionar matéria-prima
+- `PUT /api/products/{productId}/raw-materials/{rawMaterialId}` - Atualizar quantidade
+- `DELETE /api/products/{productId}/raw-materials/{rawMaterialId}` - Remover
+
+### Sugestões de Produção 🎯
+- `GET /api/production/suggestions` - Calcular sugestões baseadas no estoque
+
+---
+
+## 📦 Dados Iniciais
+
+O sistema inclui dados de exemplo carregados automaticamente:
+
+- 5 Produtos (móveis)
+- 7 Matérias-primas
+- Associações produto-matéria-prima
+- Sequências de ID sincronizadas
+
+---
+
+## 🏗️ Arquitetura
+
+```
+inventory-system/
+├── src/main/java/com/industry/inventory/
+│   ├── config/           # Configurações (CORS)
+│   ├── controller/       # Controllers REST
+│   ├── dto/              # Data Transfer Objects
+│   ├── exception/        # Tratamento de erros
+│   ├── model/            # Entidades JPA
+│   ├── repository/       # Spring Data Repositories
+│   └── service/          # Lógica de negócio
+└── frontend/
+    ├── src/
+    │   ├── components/   # Componentes reutilizáveis
+    │   ├── pages/        # Páginas da aplicação
+    │   ├── services/     # Serviços API
+    │   └── utils/        # Utilitários
+    └── public/
+```
+
+---
+
+## 🐳 Configuração do Docker
+
+### Banco de Dados PostgreSQL
 - **Host:** localhost
 - **Porta:** 5432
 - **Database:** inventory_db
 - **Usuário:** postgres
 - **Senha:** senha123
 
----
+### Comandos Úteis
 
-## 🏃 Executando o Projeto
-
-### 1. Iniciar o banco de dados:
 ```bash
-docker-compose up -d
-```
+# Parar o banco
+docker-compose down
 
-### 2. Compilar o projeto:
-```bash
-./mvnw clean compile
-```
+# Parar e remover dados
+docker-compose down -v
 
-### 3. Executar a aplicação:
-```bash
-./mvnw spring-boot:run
-```
-
-### 4. Executar testes:
-```bash
-./mvnw test
-```
-
-A aplicação estará disponível em: **http://localhost:8080**
-
----
-
-## 📊 Modelo de Dados
-
-### Entidades:
-
-#### **Product (Produto)**
-- `id`: Long (PK, auto increment)
-- `code`: String (único, obrigatório)
-- `name`: String (obrigatório)
-- `value`: BigDecimal (obrigatório, positivo)
-
-#### **RawMaterial (Matéria-prima)**
-- `id`: Long (PK, auto increment)
-- `code`: String (único, obrigatório)
-- `name`: String (obrigatório)
-- `stockQuantity`: BigDecimal (obrigatório, >= 0)
-
-#### **ProductRawMaterial (Associação)**
-- `id`: Long (PK, auto increment)
-- `product`: Product (FK, obrigatório)
-- `rawMaterial`: RawMaterial (FK, obrigatório)
-- `requiredQuantity`: BigDecimal (obrigatório, positivo)
-
----
-
-## 🔌 Endpoints da API
-
-### **Produtos**
-
-#### Listar todos os produtos
-```bash
-GET /api/products
-```
-
-#### Buscar produto por ID
-```bash
-GET /api/products/{id}
-```
-
-#### Buscar produto por código
-```bash
-GET /api/products/code/{code}
-```
-
-#### Criar novo produto
-```bash
-POST /api/products
-Content-Type: application/json
-
-{
-  "code": "PROD001",
-  "name": "Cadeira de Escritório",
-  "value": 450.00
-}
-```
-
-#### Atualizar produto
-```bash
-PUT /api/products/{id}
-Content-Type: application/json
-
-{
-  "code": "PROD001",
-  "name": "Cadeira de Escritório Premium",
-  "value": 500.00
-}
-```
-
-#### Deletar produto
-```bash
-DELETE /api/products/{id}
-```
-
----
-
-### **Matérias-Primas**
-
-#### Listar todas as matérias-primas
-```bash
-GET /api/raw-materials
-```
-
-#### Buscar matéria-prima por ID
-```bash
-GET /api/raw-materials/{id}
-```
-
-#### Buscar matéria-prima por código
-```bash
-GET /api/raw-materials/code/{code}
-```
-
-#### Criar nova matéria-prima
-```bash
-POST /api/raw-materials
-Content-Type: application/json
-
-{
-  "code": "MAT001",
-  "name": "Madeira de Pinus",
-  "stockQuantity": 50.00
-}
-```
-
-#### Atualizar matéria-prima
-```bash
-PUT /api/raw-materials/{id}
-Content-Type: application/json
-
-{
-  "code": "MAT001",
-  "name": "Madeira de Pinus Premium",
-  "stockQuantity": 75.00
-}
-```
-
-#### Deletar matéria-prima
-```bash
-DELETE /api/raw-materials/{id}
-```
-
----
-
-### **Associação Produto ↔ Matéria-Prima**
-
-#### Listar matérias-primas de um produto
-```bash
-GET /api/products/{productId}/raw-materials
-```
-
-#### Adicionar matéria-prima a um produto
-```bash
-POST /api/products/{productId}/raw-materials
-Content-Type: application/json
-
-{
-  "rawMaterialId": 1,
-  "requiredQuantity": 0.15
-}
-```
-
-#### Atualizar quantidade necessária
-```bash
-PUT /api/products/{productId}/raw-materials/{rawMaterialId}
-Content-Type: application/json
-
-{
-  "rawMaterialId": 1,
-  "requiredQuantity": 0.20
-}
-```
-
-#### Remover matéria-prima de um produto
-```bash
-DELETE /api/products/{productId}/raw-materials/{rawMaterialId}
-```
-
----
-
-### **Sugestões de Produção** 🎯
-
-#### Calcular sugestões de produção
-```bash
-GET /api/production/suggestions
-```
-
-**Retorna:** Lista de produtos que podem ser produzidos com o estoque atual, ordenados por valor (maior primeiro).
-
-**Resposta exemplo:**
-```json
-[
-  {
-    "product": {
-      "id": 5,
-      "code": "PROD005",
-      "name": "Sofá de 3 Lugares",
-      "value": 2500.00
-    },
-    "maxQuantity": 18,
-    "totalValue": 45000.00
-  },
-  {
-    "product": {
-      "id": 2,
-      "code": "PROD002",
-      "name": "Mesa de Jantar",
-      "value": 1200.00
-    },
-    "maxQuantity": 100,
-    "totalValue": 120000.00
-  }
-]
+# Ver logs
+docker-compose logs -f
 ```
 
 ---
 
 ## 🧪 Testando a API
 
-### Exemplos com cURL:
+### Exemplo com cURL
 
-#### 1. Listar todos os produtos:
 ```bash
+# Listar produtos
 curl http://localhost:8080/api/products
-```
 
-#### 2. Criar um produto:
-```bash
+# Criar produto
 curl -X POST http://localhost:8080/api/products \
   -H "Content-Type: application/json" \
   -d '{
@@ -294,204 +179,53 @@ curl -X POST http://localhost:8080/api/products \
     "name": "Mesa de Centro",
     "value": 350.00
   }'
-```
 
-#### 3. Listar matérias-primas:
-```bash
-curl http://localhost:8080/api/raw-materials
-```
-
-#### 4. Obter sugestões de produção:
-```bash
+# Obter sugestões de produção
 curl http://localhost:8080/api/production/suggestions
 ```
 
-#### 5. Adicionar matéria-prima a um produto:
-```bash
-curl -X POST http://localhost:8080/api/products/1/raw-materials \
-  -H "Content-Type: application/json" \
-  -d '{
-    "rawMaterialId": 1,
-    "requiredQuantity": 0.15
-  }'
-```
+Endpoints GET também funcionam direto no navegador.
 
 ---
 
-## 📦 Dados Iniciais
+## 💡 Como Funciona
 
-O projeto inclui um arquivo `data.sql` que popula o banco automaticamente com dados de exemplo:
+1. **Cadastre Produtos** com código, nome e valor
+2. **Gerencie Matérias-Primas** e quantidades em estoque
+3. **Defina Composições** indicando quais matérias-primas cada produto precisa
+4. **Receba Sugestões** automáticas de produção baseadas no estoque atual
 
-- **5 Produtos** (móveis como cadeiras, mesas, estantes, etc.)
-- **7 Matérias-primas** (madeira, tecido, parafusos, cola, verniz, dobradiças, espuma)
-- **Associações** entre produtos e matérias-primas com quantidades necessárias
-
-Os dados são inseridos automaticamente na inicialização da aplicação.
-
----
-
-## ⚠️ Tratamento de Erros
-
-A API retorna respostas padronizadas para erros:
-
-### Recurso não encontrado (404):
-```json
-{
-  "status": 404,
-  "error": "Not Found",
-  "message": "Product not found with id: 999",
-  "path": "/api/products/999",
-  "timestamp": "2026-02-05T20:30:00"
-}
-```
-
-### Erro de validação (400):
-```json
-{
-  "status": 400,
-  "error": "Validation Failed",
-  "message": "Invalid input data",
-  "fieldErrors": [
-    {
-      "field": "value",
-      "message": "Product value must be positive"
-    }
-  ],
-  "path": "/api/products",
-  "timestamp": "2026-02-05T20:30:00"
-}
-```
-
-### Erro de negócio (400):
-```json
-{
-  "status": 400,
-  "error": "Business Rule Violation",
-  "message": "Product with code PROD001 already exists",
-  "path": "/api/products",
-  "timestamp": "2026-02-05T20:30:00"
-}
-```
+O sistema calcula em tempo real quais produtos podem ser fabricados e em qual quantidade máxima, priorizando itens de maior valor agregado.
 
 ---
 
-## 🏗️ Arquitetura do Projeto
+## 📝 Sobre o Projeto
 
-```
-src/main/java/com/industry/inventory/
-├── config/              # Configurações (CORS)
-├── controller/          # Controllers REST
-├── dto/                 # Data Transfer Objects
-├── exception/           # Exceções e handlers
-├── model/               # Entidades JPA
-├── repository/          # Repositories Spring Data
-└── service/             # Regras de negócio
-```
+Este é um projeto de **teste técnico** desenvolvido para demonstração de habilidades em desenvolvimento full-stack, aplicando:
 
----
-
-## ✅ Status do Desenvolvimento
-
-- ✅ **Etapa 1:** Estrutura inicial e configuração
-- ✅ **Etapa 2:** Modelo de dados (entidades)
-- ✅ **Etapa 3:** DTOs e conversores
-- ✅ **Etapa 4:** Repositories
-- ✅ **Etapa 5:** Exception handling
-- ✅ **Etapa 6:** Service - Product
-- ✅ **Etapa 7:** Service - Raw Material
-- ✅ **Etapa 8:** Service - Associação Produto-Matéria Prima
-- ✅ **Etapa 9:** Service - Lógica de Produção
-- ✅ **Etapa 10:** Controller - Product
-- ✅ **Etapa 11:** Controller - Raw Material
-- ✅ **Etapa 12:** Controller - Associação
-- ✅ **Etapa 13:** Controller - Produção
-- ✅ **Etapa 14:** Testes e Validação Final
-
-**🎉 PROJETO CONCLUÍDO COM SUCESSO!**
-
----
-
-## 🔧 Configurações Importantes
-
-### application.properties
-
-```properties
-# Porta da aplicação
-server.port=8080
-
-# Banco de dados PostgreSQL
-spring.datasource.url=jdbc:postgresql://localhost:5432/inventory_db
-spring.datasource.username=postgres
-spring.datasource.password=senha123
-
-# JPA/Hibernate
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-
-# Inicialização de dados
-spring.sql.init.mode=always
-```
-
----
-
-## 🎯 Funcionalidades Principais
-
-1. **CRUD Completo** de Produtos e Matérias-primas
-2. **Associação** entre Produtos e Matérias-primas (com quantidades)
-3. **Cálculo Inteligente** de sugestões de produção:
-   - Verifica quais produtos podem ser produzidos
-   - Calcula quantidade máxima baseada no estoque
-   - Prioriza produtos de maior valor
-   - Calcula valor total da produção
-4. **Validações** robustas em todos os endpoints
-5. **Tratamento de Erros** padronizado e amigável
-6. **Dados Iniciais** para facilitar testes
-
----
-
-## 📝 Observações
-
-- O Hibernate está configurado com `ddl-auto=update` para criar/atualizar tabelas automaticamente
-- As queries SQL são exibidas no console (útil para debug)
-- CORS configurado para aceitar requisições de qualquer origem
-- Validações implementadas usando Jakarta Validation
-- Código profissional, limpo e bem documentado em português
-
----
-
-## 👨‍💻 Desenvolvimento
-
-Sistema desenvolvido seguindo as melhores práticas do Spring Boot e padrões de arquitetura REST.
-
-**Tecnologias e Conceitos Aplicados:**
-- Clean Code
+- Clean Architecture
 - RESTful API Design
 - Dependency Injection
 - Repository Pattern
 - DTO Pattern
-- Exception Handling
-- Bean Validation
-- JPA/Hibernate
-- Docker Containers
+- Component-Based Architecture
+- Responsive Design
+- Mobile-First Approach
 
 ---
 
-## ⚖️ Direitos Autorais e Licença
+## 👨‍💻 Desenvolvedor
 
-**IMPORTANTE**: Este código foi desenvolvido exclusivamente para avaliação técnica no processo seletivo da Projedata Informática.
-Proteção Legal
+**Erick Santos**
 
-✅ A empresa pode avaliar e executar este código para fins de processo seletivo<br>
-❌ É PROIBIDO o uso comercial, modificação ou incorporação em produtos da empresa sem contratação formal do autor<br>
-❌ É PROIBIDA a utilização em projetos internos/externos sem autorização expressa por escrito
+GitHub: [github.com/ercksantos](https://github.com/ercksantos)
 
-**Uso Comercial**
-Qualquer uso deste código além da avaliação técnica requer:
+---
 
-1. Contratação formal do autor (CLT ou PJ)
-2. Acordo de cessão de direitos autorais
-3. Compensação financeira adequada
+## ⚖️ Licença
 
-**Licença**: Todos os direitos reservados ao autor. Consulte [LICENSE](https://github.com/ercksantos/inventory-system/blob/main/LICENSE) para detalhes.<br>
-**Base Legal**: Lei nº 9.610/98 (Lei de Direitos Autorais)
+Este código foi desenvolvido para avaliação técnica em processo seletivo.
 
+Todos os direitos reservados ao autor. Consulte [LICENSE](LICENSE) para detalhes.
+
+Base Legal: Lei nº 9.610/98 (Lei de Direitos Autorais)
