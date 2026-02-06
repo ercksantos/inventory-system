@@ -1,0 +1,71 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'docker-compose.yml'
+      - 'Dockerfile'
+      - '.github/workflows/docker.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'docker-compose.yml'
+      - 'Dockerfile'
+
+jobs:
+  validate:
+    name: Validate Docker Setup
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Validate docker-compose.yml
+      run: docker-compose config
+
+    - name: Start services
+      run: docker-compose up -d
+
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        echo "⏳ Waiting for PostgreSQL to be ready..."
+        timeout 60s bash -c 'until docker-compose exec -T postgres pg_isready -U postgres; do sleep 2; done'
+        echo "✅ PostgreSQL is ready"
+
+    - name: Check services health
+      run: |
+        echo "🔍 Checking running services..."
+        docker-compose ps
+
+        # Verificar se o PostgreSQL está rodando
+        if docker-compose ps | grep -q "postgres.*Up"; then
+          echo "✅ PostgreSQL is running"
+        else
+          echo "❌ PostgreSQL is not running"
+          exit 1
+        fi
+
+    - name: Test database connection
+      run: |
+        docker-compose exec -T postgres psql -U postgres -d inventory_db -c "SELECT version();" || exit 1
+        echo "✅ Database connection successful"
+
+    - name: Show container logs
+      if: failure()
+      run: docker-compose logs
+
+    - name: Stop services
+      if: always()
+      run: docker-compose down -v
+
+    - name: Docker summary
+      if: success()
+      run: |
+        echo "### 🐳 Docker Validation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "✅ docker-compose.yml is valid" >> $GITHUB_STEP_SUMMARY
+        echo "✅ PostgreSQL container started successfully" >> $GITHUB_STEP_SUMMARY
+        echo "✅ Database connection verified" >> $GITHUB_STEP_SUMMARY
+        echo "✅ All services healthy" >> $GITHUB_STEP_SUMMARY

@@ -1,5 +1,9 @@
 # Sistema de Controle de Estoque Industrial
 
+![Backend CI](https://github.com/ercksantos/inventory-system/workflows/Backend%20CI/badge.svg)
+![Frontend CI](https://github.com/ercksantos/inventory-system/workflows/Frontend%20CI/badge.svg)
+![Docker CI](https://github.com/ercksantos/inventory-system/workflows/Docker%20CI/badge.svg)
+
 Sistema completo de gerenciamento de estoque para indústrias com **sugestões inteligentes de produção** baseadas em análise de disponibilidade de matérias-primas.
 
 **Stack:** Spring Boot 4.0.2 + Java 21 + React 18 + PostgreSQL 16
@@ -196,6 +200,47 @@ Endpoints GET também funcionam direto no navegador.
 4. **Receba Sugestões** automáticas de produção baseadas no estoque atual
 
 O sistema calcula em tempo real quais produtos podem ser fabricados e em qual quantidade máxima, priorizando itens de maior valor agregado.
+
+---
+
+## 🔄 CI/CD (Continuous Integration)
+
+Este projeto implementa pipelines de CI/CD utilizando **GitHub Actions** para garantir qualidade e confiabilidade do código.
+
+### Workflows Automatizados
+
+#### 🔧 Backend CI
+- Build e compilação do projeto Spring Boot com Maven
+- Validação do código Java 21
+- Execução de testes automatizados
+- Geração do JAR executável
+- Rodado automaticamente em push/PR para branch `main`
+
+#### 🎨 Frontend CI
+- Build da aplicação React com Vite
+- Validação de dependências (npm ci)
+- Auditoria de segurança (npm audit)
+- Verificação do tamanho do bundle
+- Upload dos artefatos de build
+- Rodado automaticamente em push/PR para branch `main`
+
+#### 🐳 Docker CI
+- Validação do arquivo docker-compose.yml
+- Teste de inicialização dos containers
+- Verificação de health check do PostgreSQL
+- Teste de conexão com o banco de dados
+- Rodado automaticamente em mudanças no docker-compose.yml
+
+### Badges de Status
+
+Os badges no topo do README indicam o status atual dos builds. Um badge verde significa que todos os testes estão passando.
+
+### Benefícios
+
+- ✅ **Qualidade garantida**: Código validado antes de cada merge
+- ✅ **Feedback rápido**: Problemas identificados automaticamente
+- ✅ **Confiança**: Build sempre funcional na branch principal
+- ✅ **DevOps**: Demonstração de conhecimento em CI/CD
 
 ---
 
