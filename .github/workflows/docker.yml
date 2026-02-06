@@ -23,24 +23,24 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Validate docker-compose.yml
-      run: docker-compose config
+      run: docker compose config
 
     - name: Start services
-      run: docker-compose up -d
+      run: docker compose up -d
 
     - name: Wait for PostgreSQL to be ready
       run: |
         echo "⏳ Waiting for PostgreSQL to be ready..."
-        timeout 60s bash -c 'until docker-compose exec -T postgres pg_isready -U postgres; do sleep 2; done'
+        timeout 60s bash -c 'until docker compose exec -T postgres pg_isready -U postgres; do sleep 2; done'
         echo "✅ PostgreSQL is ready"
 
     - name: Check services health
       run: |
         echo "🔍 Checking running services..."
-        docker-compose ps
+        docker compose ps
 
         # Verificar se o PostgreSQL está rodando
-        if docker-compose ps | grep -q "postgres.*Up"; then
+        if docker compose ps | grep -q "postgres.*Up"; then
           echo "✅ PostgreSQL is running"
         else
           echo "❌ PostgreSQL is not running"
@@ -49,16 +49,16 @@ jobs:
 
     - name: Test database connection
       run: |
-        docker-compose exec -T postgres psql -U postgres -d inventory_db -c "SELECT version();" || exit 1
+        docker compose exec -T postgres psql -U postgres -d inventory_db -c "SELECT version();" || exit 1
         echo "✅ Database connection successful"
 
     - name: Show container logs
       if: failure()
-      run: docker-compose logs
+      run: docker compose logs
 
     - name: Stop services
       if: always()
-      run: docker-compose down -v
+      run: docker compose down -v
 
     - name: Docker summary
       if: success()
